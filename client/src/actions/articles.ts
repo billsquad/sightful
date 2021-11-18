@@ -41,3 +41,13 @@ export const deleteArticle = (id: string) => async (dispatch: any) => {
     console.error(error.message);
   }
 };
+
+export const rateArticle = (id: string) => async (dispatch: any) => {
+  try {
+    const { data } = await api.rateArticle(id);
+
+    dispatch({ type: "RATE", payload: data });
+  } catch (error: any) {
+    console.error(error.message);
+  }
+};

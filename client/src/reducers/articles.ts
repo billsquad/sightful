@@ -5,6 +5,7 @@ export default (articles = [], action: { type: any; payload: any }) => {
     case "CREATE":
       return [...articles, action.payload];
     case "UPDATE":
+    case "RATE":
       return articles.map((article: any) =>
         article._id === action.payload._id ? action.payload : article
       );

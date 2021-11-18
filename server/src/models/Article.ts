@@ -6,7 +6,7 @@ const articleSchema = new mongoose.Schema({
   author: String,
   url: String,
   tags: [String],
-  likeCount: {
+  starCount: {
     type: Number,
     default: 0,
   },

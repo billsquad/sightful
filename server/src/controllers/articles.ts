@@ -54,3 +54,25 @@ export const deleteArticle = async (req: Request, res: Response) => {
 
   return res.json({ message: "Successfully deleted article." });
 };
+
+export const rateArticle = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).send("No posts found with provided id.");
+  }
+
+  const article: any = await Article.findById(id);
+
+  console.log(article);
+
+  const updatedArticle = await Article.findByIdAndUpdate(
+    id,
+    {
+      starCount: article.starCount + 1,
+    },
+    { new: true }
+  );
+
+  return res.json(updatedArticle);
+};

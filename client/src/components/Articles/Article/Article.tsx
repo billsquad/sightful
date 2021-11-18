@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarRateIcon from "@mui/icons-material/StarRate";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -16,13 +17,13 @@ import { useDispatch } from "react-redux";
 import useStyles from "./styles";
 import { Link } from "@mui/material";
 
-import { deleteArticle } from "../../../actions/articles";
+import { deleteArticle, rateArticle } from "../../../actions/articles";
 
 export const Article = ({ article, setCurrentId }: any) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { author, title, message, url, tags, likeCount, createdAt } = article;
+  const { author, title, message, url, tags, starCount, createdAt } = article;
 
   return (
     <Card className={classes.card}>
@@ -60,15 +61,28 @@ export const Article = ({ article, setCurrentId }: any) => {
         <Typography className={classes.title} variant="h5" gutterBottom>
           <Link href={url}>{title}</Link>
         </Typography>
-        <Typography className={classes.details} variant="h5" gutterBottom>
+        <Typography
+          className={classes.details}
+          variant="body2"
+          color="textSecondary"
+          component="p"
+        >
           {message}
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary" onClick={() => {}}>
-          <StarBorderIcon fontSize="small" />
-          Stars
-          {likeCount}
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => dispatch(rateArticle(article._id))}
+        >
+          {starCount > 1 ? (
+            <StarRateIcon fontSize="small" />
+          ) : (
+            <StarBorderIcon fontSize="small" />
+          )}
+          Rate
+          <span style={{ marginLeft: "5px" }}>{starCount}</span>
         </Button>
         <Button
           size="small"
