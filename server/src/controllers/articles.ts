@@ -64,8 +64,6 @@ export const rateArticle = async (req: Request, res: Response) => {
 
   const article: any = await Article.findById(id);
 
-  console.log(article);
-
   const updatedArticle = await Article.findByIdAndUpdate(
     id,
     {
