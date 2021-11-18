@@ -1,6 +1,10 @@
 import axios from "axios";
 
-const url = "http://localhost:5000/articles";
+// **DEVELOPMENT**
+// const url = "http://localhost:5000/articles";
+
+// **PROD**
+const url = "https://sightful-server.herokuapp.com/articles";
 
 export const fetchArticles = () => axios.get(url);
 export const addArticle = (newArticle: any) => axios.post(url, newArticle);
