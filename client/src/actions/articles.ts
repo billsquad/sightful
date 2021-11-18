@@ -31,3 +31,13 @@ export const updateArticle =
       console.error(error.message);
     }
   };
+
+export const deleteArticle = (id: string) => async (dispatch: any) => {
+  try {
+    await api.removeArticle(id);
+
+    dispatch({ type: "DELETE", payload: id });
+  } catch (error: any) {
+    console.error(error.message);
+  }
+};

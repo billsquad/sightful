@@ -8,6 +8,10 @@ export default (articles = [], action: { type: any; payload: any }) => {
       return articles.map((article: any) =>
         article._id === action.payload._id ? action.payload : article
       );
+    case "DELETE":
+      return articles.filter(
+        (article: any) => article._id !== action.payload._id
+      );
     default:
       return articles;
   }

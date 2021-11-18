@@ -1,5 +1,11 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { useDispatch } from "react-redux";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useState,
+  useEffect,
+} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 
 import useStyles from "./styles";
@@ -19,7 +25,16 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
     message: "",
     tags: "",
   });
+  const article = useSelector((state: any) =>
+    currentId ? state.find((a: any) => a._id === currentId) : null
+  );
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (article) {
+      setArticleData(article);
+    }
+  }, [article]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,9 +44,13 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
     } else {
       dispatch(createArticle(articleData));
     }
+    clear();
   };
 
-  const clear = () => {};
+  const clear = () => {
+    setCurrentId(null);
+    setArticleData({ author: "", title: "", url: "", message: "", tags: "" });
+  };
 
   return (
     <Paper className={classes.paper}>
@@ -41,7 +60,9 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">Add a resource</Typography>
+        <Typography variant="h6">
+          {currentId ? "Update" : "Add"} a resource
+        </Typography>
         <TextField
           name="author"
           variant="outlined"

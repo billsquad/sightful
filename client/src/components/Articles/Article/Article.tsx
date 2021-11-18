@@ -3,7 +3,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Button,
   Typography,
 } from "@material-ui/core";
@@ -12,12 +11,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { formatDistanceToNow, parseISO } from "date-fns";
+import { useDispatch } from "react-redux";
 
 import useStyles from "./styles";
 import { Link } from "@mui/material";
 
+import { deleteArticle } from "../../../actions/articles";
+
 export const Article = ({ article, setCurrentId }: any) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const { author, title, message, url, tags, likeCount, createdAt } = article;
 
   return (
@@ -66,7 +70,11 @@ export const Article = ({ article, setCurrentId }: any) => {
           Stars
           {likeCount}
         </Button>
-        <Button size="small" color="primary" onClick={() => {}}>
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => dispatch(deleteArticle(article._id))}
+        >
           <DeleteIcon fontSize="small" />
           Delete
         </Button>

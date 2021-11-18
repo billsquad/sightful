@@ -32,9 +32,25 @@ export const updateArticle = async (req: Request, res: Response) => {
     return res.status(404).send("No posts found with provided id.");
   }
 
-  const updatedArticle = await Article.findByIdAndUpdate(_id, article, {
-    new: true,
-  });
+  const updatedArticle = await Article.findByIdAndUpdate(
+    _id,
+    { ...article, _id },
+    {
+      new: true,
+    }
+  );
 
   return res.json(updatedArticle);
+};
+
+export const deleteArticle = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).send("No posts found with provided id.");
+  }
+
+  await Article.findByIdAndRemove(id);
+
+  return res.json({ message: "Successfully deleted article." });
 };
