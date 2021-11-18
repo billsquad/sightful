@@ -10,6 +10,7 @@ import { TextField, Button, Typography, Paper } from "@material-ui/core";
 
 import useStyles from "./styles";
 import { createArticle, updateArticle } from "../../actions/articles";
+import { ArticleProps } from "../Articles/Article/interface";
 
 interface FormProps {
   currentId: string | null;
@@ -18,12 +19,12 @@ interface FormProps {
 
 export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
-  const [articleData, setArticleData] = useState({
+  const [articleData, setArticleData] = useState<ArticleProps>({
     author: "",
     title: "",
     url: "",
     message: "",
-    tags: "",
+    tags: [""],
   });
   const article = useSelector((state: any) =>
     currentId ? state.find((a: any) => a._id === currentId) : null
@@ -49,7 +50,7 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
 
   const clear = () => {
     setCurrentId(null);
-    setArticleData({ author: "", title: "", url: "", message: "", tags: "" });
+    setArticleData({ author: "", title: "", url: "", message: "", tags: [""] });
   };
 
   return (
@@ -110,7 +111,7 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
           fullWidth
           value={articleData.tags}
           onChange={(e) =>
-            setArticleData({ ...articleData, tags: e.target.value })
+            setArticleData({ ...articleData, tags: e.target.value.split(",") })
           }
         ></TextField>
         <Button

@@ -4,17 +4,7 @@ import { Grid, CircularProgress } from "@material-ui/core";
 import { Article } from "./Article/Article";
 import useStyles from "./styles";
 import { Dispatch, SetStateAction } from "react";
-
-interface ArticleProps {
-  _id?: string;
-  author: string;
-  title: string;
-  message: string;
-  url: string;
-  tags: string[];
-  likeCount: number;
-  createdAt: Date;
-}
+import { ArticleProps } from "./Article/interface";
 
 export const Articles: React.FC<{
   setCurrentId: Dispatch<SetStateAction<null>>;

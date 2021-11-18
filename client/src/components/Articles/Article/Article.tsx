@@ -54,7 +54,7 @@ export const Article = ({ article, setCurrentId }: any) => {
           color="textSecondary"
           className={classes.tags}
         >
-          {tags.map((tag: string) => `#${tag}`)}
+          {tags.map((tag: string) => `#${tag} `)}
         </Typography>
       </div>
       <CardContent>
@@ -77,12 +77,12 @@ export const Article = ({ article, setCurrentId }: any) => {
           onClick={() => dispatch(rateArticle(article._id))}
         >
           {starCount > 1 ? (
-            <StarRateIcon fontSize="small" />
+            <StarRateIcon style={{ marginTop: "-2px" }} fontSize="small" />
           ) : (
             <StarBorderIcon fontSize="small" />
           )}
-          Rate
-          <span style={{ marginLeft: "5px" }}>{starCount}</span>
+          Rate &nbsp;
+          {starCount}
         </Button>
         <Button
           size="small"
