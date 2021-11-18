@@ -1,9 +1,25 @@
-import { Response } from "express";
+import { Request, Response } from "express";
+import Article from "../models/Article";
 
-export const getArticles = (_: any, res: Response) => {
-  res.send("works");
+export const getArticles = async (_: any, res: Response) => {
+  try {
+    const articles = await Article.find();
+    console.log(articles);
+
+    res.status(200).json(articles);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
 };
 
-export const createArticle = (_: any, res: Response) => {
-  res.send("created");
+export const createArticle = async (req: Request, res: Response) => {
+  const article = req.body;
+  const newArticle = new Article(article);
+
+  try {
+    await newArticle.save();
+    res.status(201).json(newArticle);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
 };
