@@ -1,9 +1,9 @@
-export default (articles = [], action: { type: any }) => {
+export default (articles = [], action: { type: any; payload: any }) => {
   switch (action.type) {
     case "FETCH_ALL":
-      return articles;
+      return action.payload;
     case "CREATE":
-      return articles;
+      return [...articles, action.payload];
     default:
       return articles;
   }

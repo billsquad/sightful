@@ -4,7 +4,6 @@ import Article from "../models/Article";
 export const getArticles = async (_: any, res: Response) => {
   try {
     const articles = await Article.find();
-    console.log(articles);
 
     res.status(200).json(articles);
   } catch (error) {
