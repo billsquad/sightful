@@ -10,7 +10,7 @@ const app = express();
 dotenv.config({ path: __dirname + "/.env" });
 
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors());
 app.use("/articles", articleRoutes);
 
 app.get("/", (_, res: Response) => {
