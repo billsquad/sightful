@@ -1,15 +1,16 @@
+import { FETCH_ALL, CREATE, UPDATE, DELETE } from "../constants/actionTypes";
+
 export default (articles = [], action: { type: any; payload: any }) => {
   switch (action.type) {
-    case "FETCH_ALL":
+    case FETCH_ALL:
       return action.payload;
-    case "CREATE":
+    case CREATE:
       return [...articles, action.payload];
-    case "UPDATE":
-    case "RATE":
+    case UPDATE:
       return articles.map((article: any) =>
         article._id === action.payload._id ? action.payload : article
       );
-    case "DELETE":
+    case DELETE:
       return articles.filter((article: any) => article._id !== action.payload);
     default:
       return articles;

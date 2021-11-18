@@ -1,3 +1,4 @@
+import { FETCH_ALL, CREATE, UPDATE, DELETE } from "../constants/actionTypes";
 import * as api from "../api";
 
 // Action creators
@@ -5,7 +6,7 @@ export const getArticles = () => async (dispatch: any) => {
   try {
     const { data } = await api.fetchArticles();
 
-    dispatch({ type: "FETCH_ALL", payload: data });
+    dispatch({ type: FETCH_ALL, payload: data });
   } catch (error: any) {
     console.error(error.message);
   }
@@ -15,7 +16,7 @@ export const createArticle = (article: any) => async (dispatch: any) => {
   try {
     const { data } = await api.addArticle(article);
 
-    dispatch({ type: "CREATE", payload: data });
+    dispatch({ type: CREATE, payload: data });
   } catch (error: any) {
     console.error(error.message);
   }
@@ -26,7 +27,7 @@ export const updateArticle =
     try {
       const { data } = await api.changeArticle(id, article);
 
-      dispatch({ type: "UPDATE", payload: data });
+      dispatch({ type: UPDATE, payload: data });
     } catch (error: any) {
       console.error(error.message);
     }
@@ -36,7 +37,7 @@ export const deleteArticle = (id: string) => async (dispatch: any) => {
   try {
     await api.removeArticle(id);
 
-    dispatch({ type: "DELETE", payload: id });
+    dispatch({ type: DELETE, payload: id });
   } catch (error: any) {
     console.error(error.message);
   }
@@ -46,7 +47,7 @@ export const rateArticle = (id: string) => async (dispatch: any) => {
   try {
     const { data } = await api.rateArticle(id);
 
-    dispatch({ type: "RATE", payload: data });
+    dispatch({ type: UPDATE, payload: data });
   } catch (error: any) {
     console.error(error.message);
   }
