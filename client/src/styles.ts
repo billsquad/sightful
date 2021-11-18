@@ -8,5 +8,6 @@ export default makeStyles(() => ({
     alignItems: "center",
     margin: "0 0 30px",
     padding: "20px 0",
+    backgroundColor: "#6f1fa994",
   },
 }));
