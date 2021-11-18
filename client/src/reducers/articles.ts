@@ -9,9 +9,7 @@ export default (articles = [], action: { type: any; payload: any }) => {
         article._id === action.payload._id ? action.payload : article
       );
     case "DELETE":
-      return articles.filter(
-        (article: any) => article._id !== action.payload._id
-      );
+      return articles.filter((article: any) => article._id !== action.payload);
     default:
       return articles;
   }
