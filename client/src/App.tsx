@@ -1,15 +1,18 @@
 import { Container, AppBar, Typography, Grow, Grid } from "@material-ui/core";
 import { Articles } from "./components/Articles/Articles";
 import { Form } from "./components/Form/Form";
+import useStyles from "./styles";
 
 // TODO: change font style
 // TODO: Refactor to tailwindcss
 // TODO: Form available from modal window
 
 function App() {
+  const classes = useStyles();
+
   return (
     <>
-      <AppBar position="static" color="inherit">
+      <AppBar className={classes.appBar} position="static" color="inherit">
         <Typography variant="h2" align="center">
           Sightful
         </Typography>
