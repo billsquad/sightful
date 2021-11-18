@@ -20,3 +20,14 @@ export const createArticle = (article: any) => async (dispatch: any) => {
     console.error(error.message);
   }
 };
+
+export const updateArticle =
+  (id: string, article: any) => async (dispatch: any) => {
+    try {
+      const { data } = await api.changeArticle(id, article);
+
+      dispatch({ type: "UPDATE", payload: data });
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };

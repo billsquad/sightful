@@ -4,3 +4,5 @@ const url = "http://localhost:5000/articles";
 
 export const fetchArticles = () => axios.get(url);
 export const addArticle = (newArticle: any) => axios.post(url, newArticle);
+export const changeArticle = (currentId: string, updatedArticle: any) =>
+  axios.patch(`${url}/id`);

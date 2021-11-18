@@ -1,13 +1,16 @@
-import { FormEvent, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useDispatch } from "react-redux";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 
 import useStyles from "./styles";
-import { createArticle } from "../../actions/articles";
+import { createArticle, updateArticle } from "../../actions/articles";
 
-interface FormProps {}
+interface FormProps {
+  currentId: string | null;
+  setCurrentId: Dispatch<SetStateAction<null>>;
+}
 
-export const Form: React.FC<FormProps> = ({}) => {
+export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
   const [articleData, setArticleData] = useState({
     author: "",
@@ -21,7 +24,11 @@ export const Form: React.FC<FormProps> = ({}) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    dispatch(createArticle(articleData));
+    if (currentId) {
+      dispatch(updateArticle(currentId, articleData));
+    } else {
+      dispatch(createArticle(articleData));
+    }
   };
 
   const clear = () => {};
@@ -34,7 +41,7 @@ export const Form: React.FC<FormProps> = ({}) => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">Add a sightful resource</Typography>
+        <Typography variant="h6">Add a resource</Typography>
         <TextField
           name="author"
           variant="outlined"
@@ -98,7 +105,7 @@ export const Form: React.FC<FormProps> = ({}) => {
         <Button
           className={classes.buttonSubmit}
           variant="contained"
-          color="secondary"
+          color="primary"
           size="small"
           onClick={clear}
           fullWidth

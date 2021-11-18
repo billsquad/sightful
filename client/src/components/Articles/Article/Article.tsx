@@ -16,7 +16,7 @@ import { formatDistanceToNow, parseISO } from "date-fns";
 import useStyles from "./styles";
 import { Link } from "@mui/material";
 
-export const Article = ({ article }: any) => {
+export const Article = ({ article, setCurrentId }: any) => {
   const classes = useStyles();
   const { author, title, message, url, tags, likeCount, createdAt } = article;
 
@@ -32,7 +32,11 @@ export const Article = ({ article }: any) => {
         </Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button style={{ color: "#fff" }} size="small" onClick={() => {}}>
+        <Button
+          style={{ color: "#fff" }}
+          size="small"
+          onClick={() => setCurrentId(article._id)}
+        >
           <MoreHorizIcon />
         </Button>
         <Button style={{ color: "#fff" }} size="small" onClick={() => {}}>
@@ -56,6 +60,17 @@ export const Article = ({ article }: any) => {
           {message}
         </Typography>
       </CardContent>
+      <CardActions className={classes.cardActions}>
+        <Button size="small" color="primary" onClick={() => {}}>
+          <StarBorderIcon fontSize="small" />
+          Stars
+          {likeCount}
+        </Button>
+        <Button size="small" color="primary" onClick={() => {}}>
+          <DeleteIcon fontSize="small" />
+          Delete
+        </Button>
+      </CardActions>
     </Card>
   );
 };

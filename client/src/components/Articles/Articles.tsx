@@ -3,6 +3,7 @@ import { Grid, CircularProgress } from "@material-ui/core";
 
 import { Article } from "./Article/Article";
 import useStyles from "./styles";
+import { Dispatch, SetStateAction } from "react";
 
 interface ArticleProps {
   _id?: string;
@@ -15,7 +16,9 @@ interface ArticleProps {
   createdAt: Date;
 }
 
-export const Articles: React.FC<{}> = () => {
+export const Articles: React.FC<{
+  setCurrentId: Dispatch<SetStateAction<null>>;
+}> = ({ setCurrentId }) => {
   const articles = useSelector((state) => state) as [];
   const classes = useStyles();
 
@@ -30,7 +33,7 @@ export const Articles: React.FC<{}> = () => {
     >
       {articles.map((article: ArticleProps) => (
         <Grid key={article._id} item xs={12}>
-          <Article article={article} />
+          <Article article={article} setCurrentId={setCurrentId} />
         </Grid>
       ))}
     </Grid>
