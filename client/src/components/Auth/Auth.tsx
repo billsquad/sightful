@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { GoogleLogin } from "react-google-login";
+import { useDispatch } from "react-redux";
+import { useLocation } from "wouter";
+import {
+  GoogleLogin,
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline,
+} from "react-google-login";
 import {
   Avatar,
   Button,
@@ -12,6 +18,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { CustomInput } from "./Input";
 import useStyles from "./styles";
 import GoogleSignIcon from "./icon";
+import { AUTH } from "../../constants/actionTypes";
 
 interface AuthProps {}
 
@@ -19,6 +26,8 @@ export const Auth: React.FC<AuthProps> = ({}) => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignedUp, setIsSignedUp] = useState(false);
+  const dispatch = useDispatch();
+  const [location, setLocation] = useLocation();
 
   const handleSubmit = () => {};
   const handleChange = () => {};
@@ -29,10 +38,26 @@ export const Auth: React.FC<AuthProps> = ({}) => {
     setShowPassword(false);
   };
 
-  const googleSuccess = async (res: any) => {
-    console.log(res);
+  const googleSuccess = async (
+    res: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => {
+    let result;
+    let token;
+
+    if ("profileObj" in res && "tokenId" in res) {
+      result = res?.profileObj;
+      token = res?.tokenId;
+    }
+
+    try {
+      dispatch({ type: AUTH, data: { result, token } });
+      setLocation("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
-  const googleFailure = () => {
+  const googleFailure = (error: any) => {
+    console.log(error);
     console.log("Unsuccessful sign in with Google.");
   };
 
@@ -109,7 +134,7 @@ export const Auth: React.FC<AuthProps> = ({}) => {
             onFailure={googleFailure}
             cookiePolicy="single_host_origin"
           />
-          <Grid container justify="flex-end">
+          <Grid container justifyContent="flex-end">
             <Grid item>
               <Button onClick={switchMode}>
                 {!isSignedUp
