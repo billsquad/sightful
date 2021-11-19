@@ -9,7 +9,9 @@ import { ArticleProps } from "./Article/interface";
 export const Articles: React.FC<{
   setCurrentId: Dispatch<SetStateAction<null>>;
 }> = ({ setCurrentId }) => {
-  const articles = useSelector((state) => state) as [];
+  const articles = useSelector(
+    (state: { articleReducer: any }) => state.articleReducer
+  ) as [];
   const classes = useStyles();
 
   return !articles.length ? (
