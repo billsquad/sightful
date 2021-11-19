@@ -12,7 +12,7 @@ export const Articles: React.FC<{
   const articles = useSelector((state) => state) as [];
   const classes = useStyles();
 
-  return !postMessage.length ? (
+  return !articles.length ? (
     <CircularProgress />
   ) : (
     <Grid
