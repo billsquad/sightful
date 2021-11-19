@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { GoogleLogin } from "react-google-login";
 import {
   Avatar,
   Button,
@@ -10,6 +11,7 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { CustomInput } from "./Input";
 import useStyles from "./styles";
+import GoogleSignIcon from "./icon";
 
 interface AuthProps {}
 
@@ -25,6 +27,13 @@ export const Auth: React.FC<AuthProps> = ({}) => {
   const switchMode = () => {
     setIsSignedUp((prevIsSignedUp) => !prevIsSignedUp);
     setShowPassword(false);
+  };
+
+  const googleSuccess = async (res: any) => {
+    console.log(res);
+  };
+  const googleFailure = () => {
+    console.log("Unsuccessful sign in with Google.");
   };
 
   return (
@@ -81,6 +90,25 @@ export const Auth: React.FC<AuthProps> = ({}) => {
           >
             {!isSignedUp ? "Sign Up" : "Sign In"}
           </Button>
+          <GoogleLogin
+            clientId="887144875626-po2u6nidd7irtspis4mhulh6fseli4cm.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <Button
+                className={classes.googleButton}
+                color="primary"
+                fullWidth
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                startIcon={<GoogleSignIcon />}
+                variant="outlined"
+              >
+                Google Sign In
+              </Button>
+            )}
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy="single_host_origin"
+          />
           <Grid container justify="flex-end">
             <Grid item>
               <Button onClick={switchMode}>
