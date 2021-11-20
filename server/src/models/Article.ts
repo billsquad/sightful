@@ -6,9 +6,9 @@ const articleSchema = new mongoose.Schema({
   author: String,
   url: String,
   tags: [String],
-  starCount: {
-    type: Number,
-    default: 0,
+  stars: {
+    type: [String],
+    default: [],
   },
   createdAt: {
     type: Date,

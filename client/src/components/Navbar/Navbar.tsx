@@ -40,15 +40,21 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
       <Toolbar className={classes.toolbar}>
         {user?.result ? (
           <div className={classes.profile}>
-            <Avatar
-              className={classes.purple}
-              alt={user?.result.name}
-              src={user?.result.imageUrl}
-            >
-              {user?.result.name.charAt(0)}
-            </Avatar>
+            {user.result.name ? (
+              <Avatar
+                className={classes.purple}
+                alt={user?.result.name}
+                src={user?.result.imageUrl}
+              >
+                {user?.result.name.charAt(0) || user?.result.username.charAt(0)}
+              </Avatar>
+            ) : (
+              <div className={`${classes.purple} ${classes.usernameBox}`}>
+                {user?.result.username.charAt(0)}
+              </div>
+            )}
             <Typography className={classes.userName} variant="h6">
-              {user?.result.name}
+              {user?.result.name || user?.result.username}
             </Typography>
             <Button variant="contained" color="secondary" onClick={logout}>
               Logout

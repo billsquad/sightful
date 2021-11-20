@@ -26,7 +26,7 @@ export default makeStyles((theme) => ({
   profile: {
     display: "flex",
     justifyContent: "space-between",
-    width: "400px",
+    width: "300px",
   },
   userName: {
     display: "flex",
@@ -39,5 +39,13 @@ export default makeStyles((theme) => ({
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
+  },
+  usernameBox: {
+    width: "50px",
+    height: "50px",
+    justifyContent: "center",
+    display: "flex",
+    alignItems: "center",
+    borderRadius: "50%",
   },
 }));

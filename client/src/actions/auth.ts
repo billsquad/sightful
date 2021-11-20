@@ -5,18 +5,25 @@ import { Dispatch } from "react";
 export const signin =
   (formData: any, setLocation: any) => async (dispatch: Dispatch<any>) => {
     try {
-      // login the user
+      const { data } = await api.signIn(formData);
+
+      console.log(data);
+
+      dispatch({ type: AUTH, data });
 
       setLocation("/");
     } catch (error) {
-      console.error(error);
+      // @ts-ignore
+      console.error(error.message);
     }
   };
 
 export const signup =
   (formData: any, setLocation: any) => async (dispatch: Dispatch<any>) => {
     try {
-      // signup the user
+      const { data } = await api.signUp(formData);
+
+      dispatch({ type: AUTH, data });
 
       setLocation("/");
     } catch (error) {

@@ -6,13 +6,14 @@ import {
   deleteArticle,
   rateArticle,
 } from "../controllers/articles";
+import auth from "../middleware/auth";
 
 const router = express.Router();
 
 router.get("/", getArticles);
-router.post("/", createArticle);
-router.patch("/:id", updateArticle);
-router.delete("/:id", deleteArticle);
-router.patch("/:id/rate", rateArticle);
+router.post("/", auth, createArticle);
+router.patch("/:id", auth, updateArticle);
+router.delete("/:id", auth, deleteArticle);
+router.patch("/:id/rate", auth, rateArticle);
 
 export default router;

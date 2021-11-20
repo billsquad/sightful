@@ -1,4 +1,5 @@
-import { Request, Response } from "express";
+import { Response } from "express";
+import UserRequest from "../custom";
 import mongoose from "mongoose";
 import Article from "../models/Article";
 
@@ -12,7 +13,7 @@ export const getArticles = async (_: any, res: Response) => {
   }
 };
 
-export const createArticle = async (req: Request, res: Response) => {
+export const createArticle = async (req: UserRequest, res: Response) => {
   const article = req.body;
   const newArticle = new Article(article);
 
@@ -24,7 +25,7 @@ export const createArticle = async (req: Request, res: Response) => {
   }
 };
 
-export const updateArticle = async (req: Request, res: Response) => {
+export const updateArticle = async (req: UserRequest, res: Response) => {
   const { id: _id } = req.params;
   const article = req.body;
 
@@ -43,7 +44,7 @@ export const updateArticle = async (req: Request, res: Response) => {
   return res.json(updatedArticle);
 };
 
-export const deleteArticle = async (req: Request, res: Response) => {
+export const deleteArticle = async (req: UserRequest, res: Response) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -55,8 +56,12 @@ export const deleteArticle = async (req: Request, res: Response) => {
   return res.json({ message: "Successfully deleted article." });
 };
 
-export const rateArticle = async (req: Request, res: Response) => {
+export const rateArticle = async (req: UserRequest, res: Response) => {
   const { id } = req.params;
+
+  if (!req.userId) {
+    return res.json({ message: "Unauthenticated." });
+  }
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send("No posts found with provided id.");
@@ -64,13 +69,21 @@ export const rateArticle = async (req: Request, res: Response) => {
 
   const article: any = await Article.findById(id);
 
-  const updatedArticle = await Article.findByIdAndUpdate(
-    id,
-    {
-      starCount: article.starCount + 1,
-    },
-    { new: true }
+  const index = article.stars.findIndex(
+    (id: string) => id === String(req.userId)
   );
+
+  if (index === -1) {
+    article.stars.push(req.userId);
+  } else {
+    article.stars = article.stars.filter(
+      (id: string) => id !== String(req.userId)
+    );
+  }
+
+  const updatedArticle = await Article.findByIdAndUpdate(id, article, {
+    new: true,
+  });
 
   return res.json(updatedArticle);
 };
