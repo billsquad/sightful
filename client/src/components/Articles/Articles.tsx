@@ -1,16 +1,17 @@
-import { useSelector } from "react-redux";
 import { Grid, CircularProgress } from "@material-ui/core";
 
 import { Article } from "./Article/Article";
 import useStyles from "./styles";
 import { Dispatch, SetStateAction } from "react";
 import { ArticleProps } from "./Article/interface";
+import { RootState } from "../../store";
+import { useAppSelector } from "../../hooks";
 
 export const Articles: React.FC<{
   setCurrentId: Dispatch<SetStateAction<null>>;
 }> = ({ setCurrentId }) => {
-  const articles = useSelector(
-    (state: { articleReducer: any }) => state.articleReducer
+  const articles = useAppSelector(
+    (state: RootState) => state.articleReducer
   ) as [];
   const classes = useStyles();
 

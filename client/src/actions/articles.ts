@@ -1,8 +1,9 @@
+import { Dispatch } from "react";
 import { FETCH_ALL, CREATE, UPDATE, DELETE } from "../constants/actionTypes";
 import * as api from "../api";
 
 // Action creators
-export const getArticles = () => async (dispatch: any) => {
+export const getArticles = () => async (dispatch: Dispatch<any>) => {
   try {
     const { data } = await api.fetchArticles();
 
@@ -12,18 +13,19 @@ export const getArticles = () => async (dispatch: any) => {
   }
 };
 
-export const createArticle = (article: any) => async (dispatch: any) => {
-  try {
-    const { data } = await api.addArticle(article);
+export const createArticle =
+  (article: any) => async (dispatch: Dispatch<any>) => {
+    try {
+      const { data } = await api.addArticle(article);
 
-    dispatch({ type: CREATE, payload: data });
-  } catch (error: any) {
-    console.error(error.message);
-  }
-};
+      dispatch({ type: CREATE, payload: data });
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
 
 export const updateArticle =
-  (id: string, article: any) => async (dispatch: any) => {
+  (id: string, article: any) => async (dispatch: Dispatch<any>) => {
     try {
       const { data } = await api.changeArticle(id, article);
 
@@ -33,17 +35,18 @@ export const updateArticle =
     }
   };
 
-export const deleteArticle = (id: string) => async (dispatch: any) => {
-  try {
-    await api.removeArticle(id);
+export const deleteArticle =
+  (id: string) => async (dispatch: Dispatch<any>) => {
+    try {
+      await api.removeArticle(id);
 
-    dispatch({ type: DELETE, payload: id });
-  } catch (error: any) {
-    console.error(error.message);
-  }
-};
+      dispatch({ type: DELETE, payload: id });
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
 
-export const rateArticle = (id: string) => async (dispatch: any) => {
+export const rateArticle = (id: string) => async (dispatch: Dispatch<any>) => {
   try {
     const { data } = await api.rateArticle(id);
 

@@ -5,12 +5,14 @@ import {
   useState,
   useEffect,
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 
 import useStyles from "./styles";
 import { createArticle, updateArticle } from "../../actions/articles";
 import { ArticleProps } from "../Articles/Article/interface";
+import { RootState } from "../../store";
+import { useAppSelector } from "../../hooks";
+import { useDispatch } from "react-redux";
 
 interface FormProps {
   currentId: string | null;
@@ -26,8 +28,10 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
     message: "",
     tags: [""],
   });
-  const article = useSelector((state: any) =>
-    currentId ? state.find((a: any) => a._id === currentId) : null
+  const article = useAppSelector((state: RootState) =>
+    currentId
+      ? state.articleReducer.find((a: any) => a._id === currentId)
+      : null
   );
   const dispatch = useDispatch();
 

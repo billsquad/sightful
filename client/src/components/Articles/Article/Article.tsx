@@ -59,7 +59,9 @@ export const Article = ({ article, setCurrentId }: any) => {
       </div>
       <CardContent>
         <Typography className={classes.title} variant="h5" gutterBottom>
-          <Link href={url}>{title}</Link>
+          <Link href={url} target="_blank">
+            {title}
+          </Link>
         </Typography>
         <Typography
           className={classes.details}

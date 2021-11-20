@@ -1,13 +1,14 @@
 import { Grid, TextField, InputAdornment, IconButton } from "@material-ui/core";
 import { VisibilityOff } from "@mui/icons-material";
 import Visibility from "@mui/icons-material/Visibility";
+import { ChangeEvent } from "react";
 
 interface CustomInputProps {
   name: string;
   label: string;
   autoFocus?: boolean;
   type: string;
-  handleChange: () => void;
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleShowPassword?: () => void;
 }
 

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useLocation } from "wouter";
 import {
   GoogleLogin,
@@ -16,23 +15,47 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { CustomInput } from "./Input";
+import { signin, signup } from "../../actions/auth";
+
 import useStyles from "./styles";
 import GoogleSignIcon from "./icon";
 import { AUTH } from "../../constants/actionTypes";
+import { useDispatch } from "react-redux";
 
 interface AuthProps {}
+
+const initialFormDataState = {
+  username: "",
+  email: "",
+  password: "",
+  confirmedPassword: "",
+};
 
 export const Auth: React.FC<AuthProps> = ({}) => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignedUp, setIsSignedUp] = useState(false);
+  const [formData, setFormData] = useState(initialFormDataState);
   const dispatch = useDispatch();
   const [location, setLocation] = useLocation();
 
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!isSignedUp) {
+      dispatch(signup(formData, setLocation));
+    } else {
+      dispatch(signin(formData, setLocation));
+    }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
+
   const switchMode = () => {
     setIsSignedUp((prevIsSignedUp) => !prevIsSignedUp);
     setShowPassword(false);
@@ -98,7 +121,7 @@ export const Auth: React.FC<AuthProps> = ({}) => {
             />
             {!isSignedUp && (
               <CustomInput
-                name="confirmPassword"
+                name="confirmedPassword"
                 label="Confirm Password"
                 handleChange={handleChange}
                 type="password"
