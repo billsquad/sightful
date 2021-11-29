@@ -8,7 +8,9 @@ import useStyles from "./styles";
 interface NavbarProps {}
 
 export const Navbar: React.FC<NavbarProps> = ({}) => {
-  const localStorageJSON = JSON.parse(localStorage.getItem("profile") || "{}");
+  const localStorageJSON = JSON.parse(
+    localStorage.getItem("sessionId") || "{}"
+  );
 
   const classes = useStyles();
   const [user, setUser] = useState(localStorageJSON);
