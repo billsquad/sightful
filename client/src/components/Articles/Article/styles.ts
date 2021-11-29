@@ -51,4 +51,8 @@ export default makeStyles({
     display: "flex",
     justifyContent: "space-between",
   },
+  ratingStars: {
+    display: "flex",
+    alignItems: "center",
+  },
 });

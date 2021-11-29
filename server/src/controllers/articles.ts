@@ -2,6 +2,7 @@ import { Response } from "express";
 import UserRequest from "../custom";
 import mongoose from "mongoose";
 import Article from "../models/Article";
+import { countAverageRateFromReviews } from "../utils/calculateAverageRateFromReviews";
 
 export const getArticles = async (_: any, res: Response) => {
   try {
@@ -58,27 +59,35 @@ export const deleteArticle = async (req: UserRequest, res: Response) => {
 
 export const rateArticle = async (req: UserRequest, res: Response) => {
   const { id } = req.params;
+  const { stars } = req.query;
 
-  if (!req.userId) {
-    return res.json({ message: "Unauthenticated." });
-  }
+  // if (!req.userId) {
+  //   return res.json({ message: "Unauthenticated." });
+  // }
+
+  const article = await Article.findById(id);
+
+  // const userIndex = article.reviewed.findIndex(
+  //   (id: string) => id === String(req.userId)
+  // );
+
+  // if (userIndex === -1) {
+  //   article.reviewed.push(req.userId);
+  //   article.totalRates.push(stars);
+  // } else {
+  //   article.reviewed = article.reviewed.filter(
+  //     (id: string) => id !== String(req.userId)
+  //   );
+  // }
+
+  console.log(stars, article.totalRates);
+
+  article.totalRates.push(stars);
+  article.averageRate = countAverageRateFromReviews(article.totalRates);
+  article.totalReviewsCount = article.totalRates.length;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send("No posts found with provided id.");
-  }
-
-  const article: any = await Article.findById(id);
-
-  const index = article.stars.findIndex(
-    (id: string) => id === String(req.userId)
-  );
-
-  if (index === -1) {
-    article.stars.push(req.userId);
-  } else {
-    article.stars = article.stars.filter(
-      (id: string) => id !== String(req.userId)
-    );
   }
 
   const updatedArticle = await Article.findByIdAndUpdate(id, article, {

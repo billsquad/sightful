@@ -6,5 +6,6 @@ export interface ArticleProps {
   url: string;
   tags: string[];
   starCount?: number;
+  totalReviews: number[];
   createdAt?: Date;
 }

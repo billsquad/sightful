@@ -41,17 +41,19 @@ export const deleteArticle =
       await api.removeArticle(id);
 
       dispatch({ type: DELETE, payload: id });
+      localStorage.removeItem(`userArticleRate${id}`);
     } catch (error: any) {
       console.error(error.message);
     }
   };
 
-export const rateArticle = (id: string) => async (dispatch: Dispatch<any>) => {
-  try {
-    const { data } = await api.rateArticle(id);
+export const rateArticle =
+  (id: string, rate: number | null) => async (dispatch: Dispatch<any>) => {
+    try {
+      const { data } = await api.rateArticle(id, rate);
 
-    dispatch({ type: UPDATE, payload: data });
-  } catch (error: any) {
-    console.error(error.message);
-  }
-};
+      dispatch({ type: UPDATE, payload: data });
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };

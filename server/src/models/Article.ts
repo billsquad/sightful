@@ -6,10 +6,16 @@ const articleSchema = new mongoose.Schema({
   author: String,
   url: String,
   tags: [String],
-  stars: {
-    type: [String],
-    default: [],
+  totalReviewsCount: {
+    type: Number,
+    default: 0,
   },
+  totalRates: [Number],
+  averageRate: {
+    type: Number,
+    default: 0,
+  },
+  reviewed: [String],
   createdAt: {
     type: Date,
     default: new Date(),

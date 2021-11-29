@@ -21,7 +21,16 @@ export const Article = ({ article, setCurrentId }: any) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { author, title, message, url, tags, starCount, createdAt } = article;
+  const {
+    author,
+    title,
+    message,
+    url,
+    tags,
+    totalReviewsCount,
+    averageRate,
+    createdAt,
+  } = article;
 
   return (
     <Card className={classes.card}>
@@ -71,7 +80,13 @@ export const Article = ({ article, setCurrentId }: any) => {
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <RatingStars articleId={article._id} starCount={starCount} />
+        <div className={classes.ratingStars}>
+          <RatingStars
+            articleId={article._id}
+            totalReviewsCount={totalReviewsCount}
+            averageRate={averageRate}
+          />
+        </div>
         <Button
           size="small"
           color="primary"
