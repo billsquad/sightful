@@ -1,28 +1,35 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
+import UserAuthInfoRequest from "../custom";
+import { JwtPayload } from "./interface";
 
-// @ts-ignore
-const auth = async (req: Request, res: Response, next: NextFunction) => {
+const GOOGLE_AUTH_LENGTH = 500;
+
+const auth = async (
+  req: UserAuthInfoRequest,
+  _res: Response,
+  next: NextFunction
+) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1] as string;
-    const isCustomAuth = token?.length < 500;
+    const token = (req.headers.Authorization as string)?.split(" ")[1];
+    const isCustomAuth = token?.length < GOOGLE_AUTH_LENGTH;
 
     let decodedData;
 
     if (token && isCustomAuth) {
-      decodedData = jwt.verify(token, "replaceItWithSecret");
+      decodedData = jwt.verify(token, "replaceItWithSecret") as JwtPayload;
 
-      // @ts-ignore
       req.userId = decodedData?.id;
     } else {
       decodedData = jwt.decode(token);
 
-      // @ts-ignore
       req.userId = decodedData?.sub;
     }
 
     next();
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export default auth;
