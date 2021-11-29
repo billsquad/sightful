@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardActions,
@@ -6,8 +5,6 @@ import {
   Button,
   Typography,
 } from "@material-ui/core";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-import StarRateIcon from "@mui/icons-material/StarRate";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -17,7 +14,8 @@ import { useDispatch } from "react-redux";
 import useStyles from "./styles";
 import { Link } from "@mui/material";
 
-import { deleteArticle, rateArticle } from "../../../actions/articles";
+import { deleteArticle } from "../../../actions/articles";
+import RatingStars from "../../RatingStars/RatingStars";
 
 export const Article = ({ article, setCurrentId }: any) => {
   const classes = useStyles();
@@ -73,19 +71,7 @@ export const Article = ({ article, setCurrentId }: any) => {
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button
-          size="small"
-          color="primary"
-          onClick={() => dispatch(rateArticle(article._id))}
-        >
-          {starCount > 1 ? (
-            <StarRateIcon style={{ marginTop: "-2px" }} fontSize="small" />
-          ) : (
-            <StarBorderIcon fontSize="small" />
-          )}
-          Rate &nbsp;
-          {starCount}
-        </Button>
+        <RatingStars articleId={article._id} starCount={starCount} />
         <Button
           size="small"
           color="primary"
