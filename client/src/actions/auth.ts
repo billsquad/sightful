@@ -7,8 +7,6 @@ export const signin =
     try {
       const { data } = await api.signIn(formData);
 
-      console.log(data);
-
       dispatch({ type: AUTH, data });
 
       setLocation("/");
