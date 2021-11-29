@@ -61,26 +61,24 @@ export const rateArticle = async (req: UserRequest, res: Response) => {
   const { id } = req.params;
   const { stars } = req.query;
 
-  // if (!req.userId) {
-  //   return res.json({ message: "Unauthenticated." });
-  // }
+  if (!req.userId) {
+    return res.json({ message: "Unauthenticated." });
+  }
 
   const article = await Article.findById(id);
 
-  // const userIndex = article.reviewed.findIndex(
-  //   (id: string) => id === String(req.userId)
-  // );
+  const userIndex = article.reviewed.findIndex(
+    (id: string) => id === String(req.userId)
+  );
 
-  // if (userIndex === -1) {
-  //   article.reviewed.push(req.userId);
-  //   article.totalRates.push(stars);
-  // } else {
-  //   article.reviewed = article.reviewed.filter(
-  //     (id: string) => id !== String(req.userId)
-  //   );
-  // }
-
-  console.log(stars, article.totalRates);
+  if (userIndex === -1) {
+    article.reviewed.push(req.userId);
+    article.totalRates.push(stars);
+  } else {
+    article.reviewed = article.reviewed.filter(
+      (id: string) => id !== String(req.userId)
+    );
+  }
 
   article.totalRates.push(stars);
   article.averageRate = countAverageRateFromReviews(article.totalRates);
