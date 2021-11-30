@@ -11,7 +11,7 @@ import useStyles from "./styles";
 import { createArticle, updateArticle } from "../../actions/articles";
 import { ArticleProps } from "../Articles/Article/interface";
 import { RootState } from "../../store";
-import { useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../custom.hooks";
 import { useDispatch } from "react-redux";
 
 interface FormProps {
