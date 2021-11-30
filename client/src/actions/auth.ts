@@ -11,8 +11,7 @@ export const signin =
 
       setLocation("/");
     } catch (error) {
-      // @ts-ignore
-      console.error(error.message);
+      console.error(error);
     }
   };
 
