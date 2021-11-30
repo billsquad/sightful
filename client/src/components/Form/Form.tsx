@@ -63,7 +63,7 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
     return (
       <Paper className={classes.paper}>
         <Typography variant="h6" align="center">
-          Sign in to add a resource or review articles
+          Sign in to add a resource
         </Typography>
       </Paper>
     );
