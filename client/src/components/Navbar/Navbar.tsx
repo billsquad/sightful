@@ -3,9 +3,12 @@ import { useDispatch } from "react-redux";
 import { Link, useLocation } from "wouter";
 import { AppBar, Typography } from "@material-ui/core";
 import { Avatar, Button, Toolbar } from "@mui/material";
+import decode, { JwtPayload } from "jwt-decode";
 
 import * as actionType from "../../constants/actionTypes";
 import useStyles from "./styles";
+
+type customJwtPayload = JwtPayload & { exp: number };
 
 export const Navbar = () => {
   const localStorageJSON = JSON.parse(
@@ -19,6 +22,14 @@ export const Navbar = () => {
 
   useEffect(() => {
     const token = user?.token;
+
+    if (token) {
+      const decodedToken = decode(token) as customJwtPayload;
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        logout();
+      }
+    }
 
     setUser(localStorageJSON);
   }, [location]);
