@@ -70,7 +70,7 @@ export const Article = ({ article, setCurrentId }: any) => {
       </div>
       <CardContent>
         <Typography className={classes.title} variant="h5" gutterBottom>
-          <Link href={url} target="_blank">
+          <Link href={`https:${url}`} target="_blank" rel="noreferrer">
             {title}
           </Link>
         </Typography>
