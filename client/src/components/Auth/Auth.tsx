@@ -77,9 +77,8 @@ export const Auth = () => {
       console.error(error);
     }
   };
-  const googleFailure = (error: any) => {
-    console.error("Unsuccessful sign in with Google.");
-  };
+
+  const googleFailure = () => alert("Unsuccessful sign in with Google.");
 
   return (
     <Container component="main" maxWidth="xs">
