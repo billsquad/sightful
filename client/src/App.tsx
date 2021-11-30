@@ -6,7 +6,7 @@ import { Auth } from "./components/Auth/Auth";
 
 // TODO: change font style
 // TODO: Refactor to tailwindcss
-// TODO: Form available from modal window
+// TODO: Add form available from modal window
 
 function App() {
   return (
