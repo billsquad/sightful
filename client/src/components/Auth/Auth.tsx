@@ -139,7 +139,7 @@ export const Auth: React.FC<AuthProps> = ({}) => {
             {!isSignedUp ? "Sign Up" : "Sign In"}
           </Button>
           <GoogleLogin
-            clientId="887144875626-po2u6nidd7irtspis4mhulh6fseli4cm.apps.googleusercontent.com"
+            clientId={import.meta.env.VITE_APP_GOOGLE_CLIENT_ID as string}
             render={(renderProps) => (
               <Button
                 className={classes.googleButton}
