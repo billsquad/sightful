@@ -14,8 +14,7 @@ Go to directory `client`
 
 Go back to the root of the project and switch to `server` directory `cd .. && cd server`
 
-`npm i`
-`npm run start:dev`
+`npm i && npm run start:dev`
 
 Share your thoughts ✨ I would appreciate your unique feedback 🙌 *__zinko.adrian00@gmail.com__*
 
