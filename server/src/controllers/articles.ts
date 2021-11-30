@@ -16,7 +16,11 @@ export const getArticles = async (_: any, res: Response) => {
 
 export const createArticle = async (req: UserRequest, res: Response) => {
   const article = req.body;
-  const newArticle = new Article(article);
+  const newArticle = new Article({
+    ...article,
+    author: req.userId,
+    createdAt: new Date().toISOString(),
+  });
 
   try {
     await newArticle.save();
@@ -74,15 +78,14 @@ export const rateArticle = async (req: UserRequest, res: Response) => {
   if (userIndex === -1) {
     article.reviewed.push(req.userId);
     article.totalRates.push(stars);
+    article.averageRate = countAverageRateFromReviews(article.totalRates);
+    article.totalReviewsCount = article.totalRates.length;
   } else {
-    article.reviewed = article.reviewed.filter(
-      (id: string) => id !== String(req.userId)
-    );
+    article.totalRates.pop();
+    article.totalRates.push(stars);
+    article.averageRate = countAverageRateFromReviews(article.totalRates);
+    article.totalReviewsCount = article.totalRates.length;
   }
-
-  article.totalRates.push(stars);
-  article.averageRate = countAverageRateFromReviews(article.totalRates);
-  article.totalReviewsCount = article.totalRates.length;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send("No posts found with provided id.");

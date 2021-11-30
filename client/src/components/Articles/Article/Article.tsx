@@ -20,9 +20,10 @@ import RatingStars from "../../RatingStars/RatingStars";
 export const Article = ({ article, setCurrentId }: any) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("sessionId") as string);
 
   const {
-    author,
+    name,
     title,
     message,
     url,
@@ -36,7 +37,7 @@ export const Article = ({ article, setCurrentId }: any) => {
     <Card className={classes.card}>
       <div className={classes.header} />
       <div className={classes.overlay}>
-        <Typography variant="h6">{author}</Typography>
+        <Typography variant="h6">{name}</Typography>
         <Typography variant="body2">
           {formatDistanceToNow(parseISO(createdAt), {
             addSuffix: true,
@@ -44,13 +45,16 @@ export const Article = ({ article, setCurrentId }: any) => {
         </Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button
-          style={{ color: "#fff" }}
-          size="small"
-          onClick={() => setCurrentId(article._id)}
-        >
-          <MoreHorizIcon />
-        </Button>
+        {(user?.result?.googleId === article?.author ||
+          user?.result?._id === article?.author) && (
+          <Button
+            style={{ color: "#fff" }}
+            size="small"
+            onClick={() => setCurrentId(article._id)}
+          >
+            <MoreHorizIcon />
+          </Button>
+        )}
         <Button style={{ color: "#fff" }} size="small" onClick={() => {}}>
           <VisibilityIcon />
         </Button>
@@ -87,14 +91,17 @@ export const Article = ({ article, setCurrentId }: any) => {
             averageRate={averageRate}
           />
         </div>
-        <Button
-          size="small"
-          color="primary"
-          onClick={() => dispatch(deleteArticle(article._id))}
-        >
-          <DeleteIcon fontSize="small" />
-          Delete
-        </Button>
+        {(user?.result?.googleId === article?.author ||
+          user?.result?._id === article?.author) && (
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => dispatch(deleteArticle(article._id))}
+          >
+            <DeleteIcon fontSize="small" />
+            Delete
+          </Button>
+        )}
       </CardActions>
     </Card>
   );

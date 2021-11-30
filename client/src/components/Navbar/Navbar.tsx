@@ -3,13 +3,13 @@ import { useDispatch } from "react-redux";
 import { Link, useLocation } from "wouter";
 import { AppBar, Typography } from "@material-ui/core";
 import { Avatar, Button, Toolbar } from "@mui/material";
+
+import * as actionType from "../../constants/actionTypes";
 import useStyles from "./styles";
 
-interface NavbarProps {}
-
-export const Navbar: React.FC<NavbarProps> = ({}) => {
+export const Navbar = () => {
   const localStorageJSON = JSON.parse(
-    localStorage.getItem("sessionId") || "{}"
+    localStorage.getItem("sessionId") as string
   );
 
   const classes = useStyles();
@@ -24,9 +24,10 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
   }, [location]);
 
   const logout = () => {
-    dispatch({ type: "LOGOUT" });
+    dispatch({ type: actionType.LOGOUT });
 
-    setLocation("/");
+    setLocation("/auth");
+
     setUser(null);
   };
 

@@ -17,14 +17,15 @@ const RatingStars: React.FC<RatingStarsProps> = ({
   totalReviewsCount,
   averageRate,
 }) => {
-  const localStorageJSON = JSON.parse(
+  const articleRatesLocalStorage = JSON.parse(
     localStorage.getItem(`userArticleRate${articleId}`) || "{}"
   );
+  const user = JSON.parse(localStorage.getItem("sessionId") as string);
 
   const classes = useStyles();
   const [rating, setRating] = useState<number | null>(Math.round(averageRate));
   const [userRate, setUserRate] = useState<number | null>(
-    localStorageJSON.userRate || null
+    articleRatesLocalStorage.userRate || null
   );
   const [hover, setHover] = useState<number | null>(null);
 
@@ -57,6 +58,7 @@ const RatingStars: React.FC<RatingStarsProps> = ({
               type="radio"
               name="rating"
               value={Math.round(averageRate)}
+              disabled={!user?.result}
               onClick={() =>
                 handleClick(rate) as
                   | MouseEventHandler<HTMLInputElement>
@@ -88,7 +90,7 @@ const RatingStars: React.FC<RatingStarsProps> = ({
         Total reviews: <strong>{totalReviewsCount}</strong>
       </span>
       &nbsp;
-      {userRate && (
+      {user && userRate && (
         <span>
           Your rate: <span style={{ fontWeight: "bold" }}>{userRate}/5</span>
         </span>

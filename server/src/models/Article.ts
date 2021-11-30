@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const articleSchema = new mongoose.Schema({
   title: String,
   message: String,
+  name: String,
   author: String,
   url: String,
   tags: [String],

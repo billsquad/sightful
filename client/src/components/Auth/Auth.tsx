@@ -22,8 +22,6 @@ import GoogleSignIcon from "./icon";
 import { AUTH } from "../../constants/actionTypes";
 import { useDispatch } from "react-redux";
 
-interface AuthProps {}
-
 const initialFormDataState = {
   username: "",
   email: "",
@@ -31,10 +29,10 @@ const initialFormDataState = {
   confirmedPassword: "",
 };
 
-export const Auth: React.FC<AuthProps> = ({}) => {
+export const Auth = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
-  const [isSignedUp, setIsSignedUp] = useState(false);
+  const [isSignedUp, setIsSignedUp] = useState(true);
   const [formData, setFormData] = useState(initialFormDataState);
   const dispatch = useDispatch();
   const [location, setLocation] = useLocation();
@@ -80,8 +78,7 @@ export const Auth: React.FC<AuthProps> = ({}) => {
     }
   };
   const googleFailure = (error: any) => {
-    console.log(error);
-    console.log("Unsuccessful sign in with Google.");
+    console.error("Unsuccessful sign in with Google.");
   };
 
   return (

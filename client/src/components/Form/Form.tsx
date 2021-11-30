@@ -22,7 +22,6 @@ interface FormProps {
 export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
   const [articleData, setArticleData] = useState<ArticleProps>({
-    author: "",
     title: "",
     url: "",
     message: "",
@@ -34,6 +33,7 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
       : null
   );
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("sessionId") as string);
 
   useEffect(() => {
     if (article) {
@@ -45,17 +45,29 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
     e.preventDefault();
 
     if (currentId) {
-      dispatch(updateArticle(currentId, articleData));
+      dispatch(
+        updateArticle(currentId, { ...articleData, name: user?.result?.name })
+      );
     } else {
-      dispatch(createArticle(articleData));
+      dispatch(createArticle({ ...articleData, name: user?.result?.name }));
     }
     clear();
   };
 
   const clear = () => {
     setCurrentId(null);
-    setArticleData({ author: "", title: "", url: "", message: "", tags: [""] });
+    setArticleData({ title: "", url: "", message: "", tags: [""] });
   };
+
+  if (!user?.result?.name && !user?.result?.username) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Sign in to add a resource
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -68,16 +80,6 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
         <Typography variant="h6">
           {currentId ? "Update" : "Add"} a resource
         </Typography>
-        <TextField
-          name="author"
-          variant="outlined"
-          label="Author"
-          fullWidth
-          value={articleData.author}
-          onChange={(e) =>
-            setArticleData({ ...articleData, author: e.target.value })
-          }
-        ></TextField>
         <TextField
           name="title"
           variant="outlined"

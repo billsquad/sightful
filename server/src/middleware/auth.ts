@@ -11,13 +11,16 @@ const auth = async (
   next: NextFunction
 ) => {
   try {
-    const token = (req.headers.Authorization as string)?.split(" ")[1];
+    const token = (req.headers.authorization as string)?.split(" ")[1];
     const isCustomAuth = token?.length < GOOGLE_AUTH_LENGTH;
 
     let decodedData;
 
     if (token && isCustomAuth) {
-      decodedData = jwt.verify(token, "replaceItWithSecret") as JwtPayload;
+      decodedData = jwt.verify(
+        token,
+        `${process.env.JWT_SECRET}`
+      ) as JwtPayload;
 
       req.userId = decodedData?.id;
     } else {
