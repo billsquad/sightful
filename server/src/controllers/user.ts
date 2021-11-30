@@ -22,7 +22,7 @@ export const signin = async (req: Request, res: Response) => {
 
     const token = jwt.sign(
       { email: existingUser.email, id: existingUser._id },
-      `${process.env.JWT_SECRET}`,
+      "replaceItWithSecret",
       { expiresIn: 1000 * 60 * 60 * 24 * 365 }
     );
 
@@ -56,7 +56,7 @@ export const signup = async (req: Request, res: Response) => {
 
     const token = jwt.sign(
       { email: result.email, id: result._id },
-      `${process.env.JWT_SECRET}`,
+      "replaceItWithSecret",
       { expiresIn: 1000 * 60 * 60 * 24 * 365 }
     );
 
