@@ -16,7 +16,7 @@ const articleSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  reviewed: [String],
+  reviewedBy: [String],
   createdAt: {
     type: Date,
     default: new Date(),

@@ -20,7 +20,7 @@ app.get("/", (_, res) => {
 });
 const PORT = process.env.PORT || 5000;
 mongoose_1.default
-    .connect(`${process.env.MONGO_URI}`)
+    .connect("mongodb+srv://user:user123@mycluster0.tukbr.mongodb.net/sightfuldb?retryWrites=true&w=majority")
     .then(() => app.listen(PORT, () => console.log(`Server is listening at http://localhost:${PORT}`)))
     .catch((error) => console.error(error.message));
 //# sourceMappingURL=index.js.map

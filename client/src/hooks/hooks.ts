@@ -1,6 +1,6 @@
 import { useLocation as useWouterLocation } from "wouter";
 
-export const useSearchLocation = () => {
+const useSearchLocation = () => {
   const [location, setLocation] = useWouterLocation();
   return [location, setLocation, window.location.search];
 };
