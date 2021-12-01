@@ -5,39 +5,46 @@ import {
   CREATE,
   UPDATE,
   DELETE,
+  START_LOADING,
+  END_LOADING,
 } from "../constants/actionTypes";
 import * as api from "../api";
 
 // Action creators
-export const getArticles =
-  (page: number) => async (dispatch: Dispatch<any>) => {
-    if (page) {
-      try {
-        const { data } = await api.fetchArticles(page);
+export const getArticles = (page: number) => async (dispatch: any) => {
+  // TODO: Fix request to articles?page=undefined - remove if (page)
+  // console.log(page);
 
-        dispatch({ type: FETCH_ALL, payload: data });
-      } catch (error: any) {
-        console.error(error.message);
-      }
+  if (page) {
+    try {
+      dispatch({ type: START_LOADING });
+      const {
+        data: { data, currentPage, numberOfPages },
+      } = await api.fetchArticles(page);
+
+      dispatch({
+        type: FETCH_ALL,
+        payload: { data, currentPage, numberOfPages },
+      });
+
+      dispatch({ type: END_LOADING });
+    } catch (error: any) {
+      console.error(error.stack);
     }
-  };
+  }
+};
 
 export const getArticlesBySearch =
   (searchQuery: { searchTerm: string; tags: string }) =>
   async (dispatch: Dispatch<any>) => {
     try {
+      dispatch({ type: START_LOADING });
       const {
         data: { data },
       } = await api.fetchArticlesBySearch(searchQuery);
 
-      if (!data.length) {
-        return dispatch({
-          type: FETCH_BY_SEARCH,
-          payload: { message: "Query not found" },
-        });
-      }
-
-      dispatch({ type: FETCH_BY_SEARCH, payload: data });
+      dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
+      dispatch({ type: END_LOADING });
     } catch (error: any) {
       console.error(error.message);
     }
@@ -46,9 +53,11 @@ export const getArticlesBySearch =
 export const createArticle =
   (article: any) => async (dispatch: Dispatch<any>) => {
     try {
+      dispatch({ type: START_LOADING });
       const { data } = await api.addArticle(article);
 
       dispatch({ type: CREATE, payload: data });
+      dispatch({ type: END_LOADING });
     } catch (error: any) {
       console.error(error.message);
     }

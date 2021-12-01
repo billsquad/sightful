@@ -23,7 +23,7 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({ page }) => {
     if (page) {
       dispatch(getArticles(page));
     }
-  }, [page]);
+  }, [dispatch, page]);
 
   return (
     <div>

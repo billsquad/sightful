@@ -7,19 +7,24 @@ import { ArticleProps } from "./Article/interface";
 import { RootState } from "../../store";
 import { useAppSelector } from "../../custom.hooks";
 
+interface ArticleState {
+  articles: any;
+  isLoading: boolean;
+}
+
 export const Articles: React.FC<{
   setCurrentId: Dispatch<SetStateAction<null>>;
 }> = ({ setCurrentId }) => {
-  const { articles } = useAppSelector(
+  const { articles, isLoading } = useAppSelector(
     (state: RootState) => state.articleReducer
-  ) as { articles: any; message: string };
+  ) as ArticleState;
   const classes = useStyles();
 
-  if ((articles as { message: string })?.message) {
-    return <h1>{(articles as { message: string }).message}</h1>;
+  if (!articles?.length && !isLoading) {
+    return <h1>No articles found.</h1>;
   }
 
-  return !(articles as [])?.length ? (
+  return isLoading ? (
     <CircularProgress />
   ) : (
     <Grid

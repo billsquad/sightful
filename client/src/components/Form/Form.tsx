@@ -29,7 +29,7 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
   });
   const article = useAppSelector((state: RootState) =>
     currentId
-      ? state.articleReducer.find((a: any) => a._id === currentId)
+      ? state.articleReducer.articles.find((a: any) => a._id === currentId)
       : null
   );
   const dispatch = useDispatch();

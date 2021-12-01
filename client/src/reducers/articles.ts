@@ -1,7 +1,14 @@
 import * as actionType from "../constants/actionTypes";
 
-export default (state = [], action: { type: any; payload: any }) => {
+export default (
+  state = { isLoading: true, articles: [] },
+  action: { type: any; payload: any }
+) => {
   switch (action.type) {
+    case actionType.START_LOADING:
+      return { ...state, isLoading: true };
+    case actionType.END_LOADING:
+      return { ...state, isLoading: false };
     case actionType.FETCH_ALL:
       return {
         ...state,
@@ -10,15 +17,23 @@ export default (state = [], action: { type: any; payload: any }) => {
         numberOfPages: action.payload.numberOfPages,
       };
     case actionType.FETCH_BY_SEARCH:
-      return { ...state, articles: action.payload };
+      return { ...state, articles: action.payload.data };
     case actionType.CREATE:
-      return [...state, action.payload];
+      return { ...state, articles: [...state.articles, action.payload] };
     case actionType.UPDATE:
-      return state.map((article: any) =>
-        article._id === action.payload._id ? action.payload : article
-      );
+      return {
+        ...state,
+        articles: state.articles.map((article: any) =>
+          article._id === action.payload._id ? action.payload : article
+        ),
+      };
     case actionType.DELETE:
-      return state.filter((article: any) => article._id !== action.payload);
+      return {
+        ...state,
+        articles: state.articles.filter(
+          (article: any) => article._id !== action.payload
+        ),
+      };
     default:
       return state;
   }
