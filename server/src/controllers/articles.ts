@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import UserRequest from "../custom";
 import mongoose from "mongoose";
 import Article from "../models/Article";
@@ -9,6 +9,22 @@ export const getArticles = async (_: any, res: Response) => {
     const articles = await Article.find();
 
     res.status(200).json(articles);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const getArticlesBySearch = async (req: Request, res: Response) => {
+  const { query, tags } = req.query;
+
+  try {
+    const title = new RegExp(query as string, "i");
+
+    const articles = await Article.find({
+      $or: [{ title }, { tags: { $in: (tags as string)?.split(",") } }],
+    });
+
+    res.json({ data: articles });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -71,12 +87,12 @@ export const rateArticle = async (req: UserRequest, res: Response) => {
 
   const article = await Article.findById(id);
 
-  const userIndex = article.reviewed.findIndex(
+  const userIndex = article.reviewedBy.findIndex(
     (id: string) => id === String(req.userId)
   );
 
   if (userIndex === -1) {
-    article.reviewed.push(req.userId);
+    article.reviewedBy.push(req.userId);
     article.totalRates.push(stars);
     article.averageRate = countAverageRateFromReviews(article.totalRates);
     article.totalReviewsCount = article.totalRates.length;
