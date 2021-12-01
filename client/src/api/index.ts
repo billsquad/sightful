@@ -1,10 +1,10 @@
 import axios from "axios";
 
 // **PROD**
-const API = axios.create({ baseURL: "https://sightful-server.herokuapp.com" });
+// const API = axios.create({ baseURL: "https://sightful-server.herokuapp.com" });
 
 // **DEVELOPMENT**
-// const API = axios.create({ baseURL: "http://localhost:5000" });
+const API = axios.create({ baseURL: "http://localhost:5000" });
 
 API.interceptors.request.use((req: any) => {
   if (localStorage.getItem("sessionId")) {
@@ -17,6 +17,15 @@ API.interceptors.request.use((req: any) => {
 });
 
 export const fetchArticles = () => API.get("/articles");
+export const fetchArticlesBySearch = (searchQuery: {
+  searchTerm: string;
+  tags: string;
+}) =>
+  API.get(
+    `/articles/search?query=${searchQuery.searchTerm || "none"}&tags=${
+      searchQuery.tags
+    }`
+  );
 export const addArticle = (newArticle: any) =>
   API.post("/articles", newArticle);
 export const changeArticle = (id: string, updatedArticle: any) =>

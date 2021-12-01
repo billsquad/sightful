@@ -7,15 +7,16 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import ChipInput from "material-ui-chip-input";
+import { useLocation } from "wouter";
 
-import { getArticles } from "../../actions/articles";
+import { getArticles, getArticlesBySearch } from "../../actions/articles";
 import { Articles } from "../Articles/Articles";
 import { Form } from "../Form/Form";
 import Pagination from "../CustomPagination/CustomPagination";
-import { useSearchQuery, useSearchLocation } from "../../hooks/hooks";
+import { useSearchQuery } from "../../hooks/hooks";
 
 import useStyles from "./styles";
 
@@ -23,20 +24,28 @@ export const Home = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
-  const [location, setLocation] = useSearchLocation();
+  const [location, setLocation] = useLocation();
   const query = useSearchQuery();
   const page = query.get("page") || 1;
   const searchQuery = query.get("searchQuery");
-  const [search, setSearch] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [tags, setTags] = useState<string[]>([]);
 
   useEffect(() => {
     dispatch(getArticles());
   }, [dispatch, setCurrentId]);
 
+  const searchArticle = () => {
+    if (searchTerm.trim()) {
+      dispatch(getArticlesBySearch({ searchTerm, tags: tags.join(",") }));
+    } else {
+      setLocation("/");
+    }
+  };
+
   const hangleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") {
-      // search through articles
+      searchArticle();
     }
   };
 
@@ -72,9 +81,9 @@ export const Home = () => {
                 variant="outlined"
                 label="Search through articles"
                 fullWidth
-                value={search}
+                value={searchTerm}
                 onKeyPress={hangleKeyPress}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
               <ChipInput
                 style={{ margin: "10px 0" }}
@@ -84,6 +93,13 @@ export const Home = () => {
                 label="Search tags"
                 variant="outlined"
               />
+              <Button
+                onClick={searchArticle}
+                color="primary"
+                variant="outlined"
+              >
+                Search
+              </Button>
             </AppBar>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
             <Paper elevation={6}>

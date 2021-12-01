@@ -13,6 +13,18 @@ export const getArticles = () => async (dispatch: Dispatch<any>) => {
   }
 };
 
+export const getArticlesBySearch =
+  (searchQuery: { searchTerm: string; tags: string }) =>
+  async (dispatch: Dispatch<any>) => {
+    try {
+      const { data } = await api.fetchArticlesBySearch(searchQuery);
+
+      console.log(data);
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+
 export const createArticle =
   (article: any) => async (dispatch: Dispatch<any>) => {
     try {
