@@ -1,4 +1,4 @@
-import { Redirect, Route } from "wouter";
+import { Router, Redirect, Route, Switch } from "wouter";
 
 import { Navbar } from "./components/Navbar/Navbar";
 import { Home } from "./components/Home/Home";
@@ -15,14 +15,16 @@ const App = () => {
   return (
     <>
       <Navbar />
-      <Route path="/" component={() => <Redirect to="/articles" />} />
-      <Route path="/articles" component={Home} />
-      <Route path="/articles/search" component={Home} />
-      <Route path="/articles/:id" component={ArticlePage} />
-      <Route
-        path="/auth"
-        component={() => (!user ? <Auth /> : <Redirect to="/articles" />)}
-      />
+      <Switch>
+        <Route path="/" component={() => <Redirect to="/articles" />} />
+        <Route path="/articles" component={Home} />
+        <Route path="/articles/search" component={Home} />
+        <Route path="/articles/:id" component={ArticlePage} />
+        <Route
+          path="/auth"
+          component={() => (!user ? <Auth /> : <Redirect to="/articles" />)}
+        />
+      </Switch>
     </>
   );
 };
