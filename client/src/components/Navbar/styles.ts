@@ -10,6 +10,9 @@ export default makeStyles((theme) => ({
     margin: "0 0 30px",
     padding: "10px 50px",
     backgroundColor: "#6f1fa994",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
   },
   heading: {
     color: "#fff",
@@ -21,6 +24,9 @@ export default makeStyles((theme) => ({
   toolbar: {
     display: "flex",
     justifyContent: "flex-end",
+    [theme.breakpoints.down("sm")]: {
+      justifyContent: "center",
+    },
     width: "400px",
   },
   profile: {

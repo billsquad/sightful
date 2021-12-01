@@ -5,14 +5,14 @@ import {
   Button,
   Typography,
 } from "@material-ui/core";
-import DeleteIcon from "@mui/icons-material/Delete";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteIcon from "@material-ui/icons/Delete";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import Link from "@material-ui/core/Link";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { useDispatch } from "react-redux";
 
 import useStyles from "./styles";
-import { Link } from "@mui/material";
 
 import { deleteArticle } from "../../../actions/articles";
 import RatingStars from "../../RatingStars/RatingStars";

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation } from "wouter";
 import { AppBar, Typography } from "@material-ui/core";
-import { Avatar, Button, Toolbar } from "@mui/material";
+import { Avatar, Button, Toolbar } from "@material-ui/core";
 import decode, { JwtPayload } from "jwt-decode";
 
 import * as actionType from "../../constants/actionTypes";

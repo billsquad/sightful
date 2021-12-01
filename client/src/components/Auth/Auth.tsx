@@ -13,7 +13,7 @@ import {
   Typography,
   Container,
 } from "@material-ui/core";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { CustomInput } from "./Input";
 import { signin, signup } from "../../actions/auth";
 

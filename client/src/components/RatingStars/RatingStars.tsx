@@ -1,6 +1,6 @@
 import React, { MouseEventHandler, useEffect, useState } from "react";
-import StarIcon from "@mui/icons-material/Star";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarIcon from "@material-ui/icons/Star";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 import useStyles from "./styles";
 import { useDispatch } from "react-redux";
 
