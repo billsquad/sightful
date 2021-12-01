@@ -9,15 +9,18 @@ import {
 import * as api from "../api";
 
 // Action creators
-export const getArticles = () => async (dispatch: Dispatch<any>) => {
-  try {
-    const { data } = await api.fetchArticles();
+export const getArticles =
+  (page: number) => async (dispatch: Dispatch<any>) => {
+    if (page) {
+      try {
+        const { data } = await api.fetchArticles(page);
 
-    dispatch({ type: FETCH_ALL, payload: data });
-  } catch (error: any) {
-    console.error(error.message);
-  }
-};
+        dispatch({ type: FETCH_ALL, payload: data });
+      } catch (error: any) {
+        console.error(error.message);
+      }
+    }
+  };
 
 export const getArticlesBySearch =
   (searchQuery: { searchTerm: string; tags: string }) =>

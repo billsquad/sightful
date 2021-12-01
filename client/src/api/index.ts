@@ -16,7 +16,8 @@ API.interceptors.request.use((req: any) => {
   return req;
 });
 
-export const fetchArticles = () => API.get("/articles");
+export const fetchArticles = (page: number) =>
+  API.get(`/articles?page=${page}`);
 export const fetchArticlesBySearch = (searchQuery: {
   searchTerm: string;
   tags: string;

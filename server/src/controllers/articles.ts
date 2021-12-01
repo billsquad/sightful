@@ -4,11 +4,24 @@ import mongoose from "mongoose";
 import Article from "../models/Article";
 import { countAverageRateFromReviews } from "../utils/calculateAverageRateFromReviews";
 
-export const getArticles = async (_: any, res: Response) => {
-  try {
-    const articles = await Article.find();
+export const getArticles = async (req: Request, res: Response) => {
+  const { page } = req.query;
 
-    res.status(200).json(articles);
+  try {
+    const LIMIT = 6;
+    const startIndex = (Number(page) - 1) * LIMIT; // the staring index of every page
+    const total = await Article.countDocuments({});
+
+    const articles = await Article.find()
+      .sort({ _id: -1 })
+      .limit(LIMIT)
+      .skip(startIndex);
+
+    res.status(200).json({
+      data: articles,
+      currentPage: Number(page),
+      numberOfPages: Math.ceil(total / LIMIT),
+    });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

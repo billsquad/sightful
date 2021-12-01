@@ -7,10 +7,10 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "wouter";
-import { getArticles, getArticlesBySearch } from "../../actions/articles";
+import { getArticlesBySearch } from "../../actions/articles";
 import { Articles } from "../Articles/Articles";
 import { Form } from "../Form/Form";
 import Pagination from "../CustomPagination/CustomPagination";
@@ -29,10 +29,6 @@ export const Home = () => {
   const searchQuery = query.get("searchQuery");
   const [searchTerm, setSearchTerm] = useState("");
   const [tags, setTags] = useState<string[]>([]);
-
-  useEffect(() => {
-    dispatch(getArticles());
-  }, [dispatch, setCurrentId]);
 
   const searchArticle = () => {
     if (searchTerm.trim() || tags.length) {
@@ -111,7 +107,7 @@ export const Home = () => {
             <Form currentId={currentId} setCurrentId={setCurrentId} />
             <Paper elevation={6}>
               <div>
-                <Pagination />
+                <Pagination page={page as number} />
               </div>
             </Paper>
           </Grid>

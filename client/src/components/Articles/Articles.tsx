@@ -10,16 +10,16 @@ import { useAppSelector } from "../../custom.hooks";
 export const Articles: React.FC<{
   setCurrentId: Dispatch<SetStateAction<null>>;
 }> = ({ setCurrentId }) => {
-  const articles = useAppSelector(
+  const { articles } = useAppSelector(
     (state: RootState) => state.articleReducer
-  ) as [] | { message: string };
+  ) as { articles: any; message: string };
   const classes = useStyles();
 
   if ((articles as { message: string })?.message) {
     return <h1>{(articles as { message: string }).message}</h1>;
   }
 
-  return !(articles as []).length ? (
+  return !(articles as [])?.length ? (
     <CircularProgress />
   ) : (
     <Grid

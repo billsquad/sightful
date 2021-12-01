@@ -1,20 +1,25 @@
 import * as actionType from "../constants/actionTypes";
 
-export default (articles = [], action: { type: any; payload: any }) => {
+export default (state = [], action: { type: any; payload: any }) => {
   switch (action.type) {
     case actionType.FETCH_ALL:
-      return action.payload;
+      return {
+        ...state,
+        articles: action.payload.data,
+        currentPage: action.payload.currentPage,
+        numberOfPages: action.payload.numberOfPages,
+      };
     case actionType.FETCH_BY_SEARCH:
-      return action.payload;
+      return { ...state, articles: action.payload };
     case actionType.CREATE:
-      return [...articles, action.payload];
+      return [...state, action.payload];
     case actionType.UPDATE:
-      return articles.map((article: any) =>
+      return state.map((article: any) =>
         article._id === action.payload._id ? action.payload : article
       );
     case actionType.DELETE:
-      return articles.filter((article: any) => article._id !== action.payload);
+      return state.filter((article: any) => article._id !== action.payload);
     default:
-      return articles;
+      return state;
   }
 };
