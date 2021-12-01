@@ -12,10 +12,14 @@ export const Articles: React.FC<{
 }> = ({ setCurrentId }) => {
   const articles = useAppSelector(
     (state: RootState) => state.articleReducer
-  ) as [];
+  ) as [] | { message: string };
   const classes = useStyles();
 
-  return !articles.length ? (
+  if ((articles as { message: string })?.message) {
+    return <h1>{(articles as { message: string }).message}</h1>;
+  }
+
+  return !(articles as []).length ? (
     <CircularProgress />
   ) : (
     <Grid
@@ -24,7 +28,7 @@ export const Articles: React.FC<{
       alignItems="stretch"
       spacing={3}
     >
-      {articles.map((article: ArticleProps) => (
+      {(articles as []).map((article: ArticleProps) => (
         <Grid key={article._id} item xs={12} sm={12} md={6} lg={6}>
           <Article article={article} setCurrentId={setCurrentId} />
         </Grid>

@@ -1,5 +1,11 @@
 import { Dispatch } from "react";
-import { FETCH_ALL, CREATE, UPDATE, DELETE } from "../constants/actionTypes";
+import {
+  FETCH_ALL,
+  FETCH_BY_SEARCH,
+  CREATE,
+  UPDATE,
+  DELETE,
+} from "../constants/actionTypes";
 import * as api from "../api";
 
 // Action creators
@@ -17,9 +23,18 @@ export const getArticlesBySearch =
   (searchQuery: { searchTerm: string; tags: string }) =>
   async (dispatch: Dispatch<any>) => {
     try {
-      const { data } = await api.fetchArticlesBySearch(searchQuery);
+      const {
+        data: { data },
+      } = await api.fetchArticlesBySearch(searchQuery);
 
-      console.log(data);
+      if (!data.length) {
+        return dispatch({
+          type: FETCH_BY_SEARCH,
+          payload: { message: "Query not found" },
+        });
+      }
+
+      dispatch({ type: FETCH_BY_SEARCH, payload: data });
     } catch (error: any) {
       console.error(error.message);
     }

@@ -1,6 +1,6 @@
 import { Grid, TextField, InputAdornment, IconButton } from "@material-ui/core";
-import { VisibilityOff } from "@mui/icons-material";
-import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Visibility from "@material-ui/icons/Visibility";
 import { ChangeEvent } from "react";
 
 interface CustomInputProps {

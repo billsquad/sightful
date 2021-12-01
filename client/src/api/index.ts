@@ -23,7 +23,7 @@ export const fetchArticlesBySearch = (searchQuery: {
 }) =>
   API.get(
     `/articles/search?query=${searchQuery.searchTerm || "none"}&tags=${
-      searchQuery.tags
+      searchQuery.tags || "none"
     }`
   );
 export const addArticle = (newArticle: any) =>

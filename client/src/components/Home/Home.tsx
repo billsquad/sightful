@@ -9,14 +9,13 @@ import {
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import ChipInput from "material-ui-chip-input";
 import { useLocation } from "wouter";
-
 import { getArticles, getArticlesBySearch } from "../../actions/articles";
 import { Articles } from "../Articles/Articles";
 import { Form } from "../Form/Form";
 import Pagination from "../CustomPagination/CustomPagination";
 import { useSearchQuery } from "../../hooks/hooks";
+import ChipInput from "material-ui-chip-input";
 
 import useStyles from "./styles";
 
@@ -36,8 +35,16 @@ export const Home = () => {
   }, [dispatch, setCurrentId]);
 
   const searchArticle = () => {
-    if (searchTerm.trim()) {
-      dispatch(getArticlesBySearch({ searchTerm, tags: tags.join(",") }));
+    if (searchTerm.trim() || tags.length) {
+      dispatch(
+        getArticlesBySearch({ searchTerm, tags: (tags as string[]).join(",") })
+      );
+
+      setLocation(
+        `/articles/search?query=${searchTerm || "none"}&tags=${(
+          tags as string[]
+        ).join(",")}`
+      );
     } else {
       setLocation("/");
     }
@@ -54,7 +61,7 @@ export const Home = () => {
   };
 
   const handleDeleteTag = (tagToDelete: string) => {
-    setTags(tags.filter((tag) => tag !== tagToDelete));
+    setTags((tags as string[]).filter((tag) => tag !== tagToDelete));
   };
 
   return (
@@ -87,7 +94,7 @@ export const Home = () => {
               />
               <ChipInput
                 style={{ margin: "10px 0" }}
-                value={tags}
+                value={tags as string[]}
                 onAdd={handleAddTag}
                 onDelete={handleDeleteTag}
                 label="Search tags"
@@ -103,7 +110,9 @@ export const Home = () => {
             </AppBar>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
             <Paper elevation={6}>
-              <Pagination />
+              <div>
+                <Pagination />
+              </div>
             </Paper>
           </Grid>
         </Grid>
