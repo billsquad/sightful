@@ -27,6 +27,18 @@ export const getArticles = async (req: Request, res: Response) => {
   }
 };
 
+export const getArticle = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const article = await Article.findById(id);
+
+    res.status(200).json(article);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 export const getArticlesBySearch = async (req: Request, res: Response) => {
   const { query, tags } = req.query;
 
