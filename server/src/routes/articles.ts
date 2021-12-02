@@ -12,9 +12,11 @@ import auth from "../middleware/auth";
 
 const router = express.Router();
 
+// ORDER REALLY MATTERS!
+router.get("/search", getArticlesBySearch);
 router.get("/", getArticles);
 router.get("/:id", getArticle);
-router.get("/search", getArticlesBySearch);
+
 router.post("/", auth, createArticle);
 router.patch("/:id", auth, updateArticle);
 router.delete("/:id", auth, deleteArticle);
