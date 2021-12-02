@@ -4,6 +4,7 @@ import { Navbar } from "./components/Navbar/Navbar";
 import { Home } from "./components/Home/Home";
 import { Auth } from "./components/Auth/Auth";
 import { ArticlePage } from "./components/ArticlePage/ArticlePage";
+import { Container } from "@material-ui/core";
 
 // TODO: change font style
 // TODO: Refactor to tailwindcss
@@ -15,16 +16,18 @@ const App = () => {
   return (
     <>
       <Navbar />
-      <Switch>
-        <Route path="/" component={() => <Redirect to="/articles" />} />
-        <Route path="/articles" component={Home} />
-        <Route path="/articles/search" component={Home} />
-        <Route path="/articles/:id" component={ArticlePage} />
-        <Route
-          path="/auth"
-          component={() => (!user ? <Auth /> : <Redirect to="/articles" />)}
-        />
-      </Switch>
+      <Container maxWidth="xl">
+        <Switch>
+          <Route path="/" component={() => <Redirect to="/articles" />} />
+          <Route path="/articles" component={Home} />
+          <Route path="/articles/search" component={Home} />
+          <Route path="/articles/:id" component={ArticlePage} />
+          <Route
+            path="/auth"
+            component={() => (!user ? <Auth /> : <Redirect to="/articles" />)}
+          />
+        </Switch>
+      </Container>
     </>
   );
 };
