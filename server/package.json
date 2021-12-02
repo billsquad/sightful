@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "npm run kill-port && nodemon",
     "tsc": "tsc",
+    "kill-port": "kill-port 5000",
     "build": "rimraf ./dist && npm run tsc",
     "start:dev": "npm run build && nodemon dist/index.js",
     "start": "npm run build && node dist/index.js"
@@ -24,6 +25,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "kill-port": "^1.6.1",
     "mongoose": "^6.0.13",
     "rimraf": "^3.0.2",
     "typescript": "^4.5.2"
