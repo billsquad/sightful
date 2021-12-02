@@ -35,7 +35,7 @@ export const Auth = () => {
   const [isSignedUp, setIsSignedUp] = useState(true);
   const [formData, setFormData] = useState(initialFormDataState);
   const dispatch = useDispatch();
-  const [location, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -95,6 +95,8 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
           variant="outlined"
           label="Message"
           fullWidth
+          multiline
+          rows={4}
           value={articleData.message}
           onChange={(e) =>
             setArticleData({ ...articleData, message: e.target.value })

@@ -4,7 +4,7 @@ import StarBorderIcon from "@material-ui/icons/StarBorder";
 import useStyles from "./styles";
 import { useDispatch } from "react-redux";
 
-import { getArticles, rateArticle } from "../../actions/articles";
+import { rateArticle } from "../../actions/articles";
 
 interface RatingStarsProps {
   articleId: string;
@@ -23,7 +23,7 @@ const RatingStars: React.FC<RatingStarsProps> = ({
   const user = JSON.parse(localStorage.getItem("sessionId") as string);
 
   const classes = useStyles();
-  const [rating, setRating] = useState<number | null>(Math.round(averageRate));
+  const [, setRating] = useState<number | null>(Math.round(averageRate));
   const [userRate, setUserRate] = useState<number | null>(
     articleRatesLocalStorage.userRate || null
   );
@@ -41,10 +41,6 @@ const RatingStars: React.FC<RatingStarsProps> = ({
 
     dispatch(rateArticle(articleId, rate));
   };
-
-  useEffect(() => {
-    dispatch(getArticles());
-  }, [rating, userRate]);
 
   return (
     <>

@@ -11,6 +11,7 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import Link from "@material-ui/core/Link";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { useDispatch } from "react-redux";
+import { useLocation } from "wouter";
 
 import useStyles from "./styles";
 
@@ -20,6 +21,7 @@ import RatingStars from "../../RatingStars/RatingStars";
 export const Article = ({ article, setCurrentId }: any) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [, setLocation] = useLocation();
   const user = JSON.parse(localStorage.getItem("sessionId") as string);
 
   const {
@@ -32,6 +34,10 @@ export const Article = ({ article, setCurrentId }: any) => {
     averageRate,
     createdAt,
   } = article;
+
+  const openArticle = () => {
+    setLocation(`/articles/${article._id}`);
+  };
 
   return (
     <Card className={classes.card}>
@@ -55,7 +61,7 @@ export const Article = ({ article, setCurrentId }: any) => {
             <MoreHorizIcon />
           </Button>
         )}
-        <Button style={{ color: "#fff" }} size="small" onClick={() => {}}>
+        <Button style={{ color: "#fff" }} size="small" onClick={openArticle}>
           <VisibilityIcon />
         </Button>
       </div>

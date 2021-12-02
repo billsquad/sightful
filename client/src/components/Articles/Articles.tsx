@@ -6,11 +6,7 @@ import { Dispatch, SetStateAction } from "react";
 import { ArticleProps } from "./Article/interface";
 import { RootState } from "../../store";
 import { useAppSelector } from "../../custom.hooks";
-
-interface ArticleState {
-  articles: any;
-  isLoading: boolean;
-}
+import { ArticleState } from "./interface";
 
 export const Articles: React.FC<{
   setCurrentId: Dispatch<SetStateAction<null>>;

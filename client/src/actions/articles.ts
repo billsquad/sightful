@@ -1,6 +1,7 @@
 import { Dispatch } from "react";
 import {
   FETCH_ALL,
+  FETCH_ARTICLE,
   FETCH_BY_SEARCH,
   CREATE,
   UPDATE,
@@ -11,27 +12,38 @@ import {
 import * as api from "../api";
 
 // Action creators
-export const getArticles = (page: number) => async (dispatch: any) => {
-  // TODO: Fix request to articles?page=undefined - remove if (page)
-  // console.log(page);
+export const getArticles =
+  (page: number) => async (dispatch: Dispatch<any>) => {
+    // TODO: Fix request to articles?page=undefined - remove if (page)
+    // console.log(page);
 
-  if (page) {
-    try {
-      dispatch({ type: START_LOADING });
-      const {
-        data: { data, currentPage, numberOfPages },
-      } = await api.fetchArticles(page);
+    if (page) {
+      try {
+        dispatch({ type: START_LOADING });
+        const {
+          data: { data, currentPage, numberOfPages },
+        } = await api.fetchArticles(page);
 
-      dispatch({
-        type: FETCH_ALL,
-        payload: { data, currentPage, numberOfPages },
-      });
+        dispatch({
+          type: FETCH_ALL,
+          payload: { data, currentPage, numberOfPages },
+        });
 
-      dispatch({ type: END_LOADING });
-    } catch (error: any) {
-      console.error(error.message);
+        dispatch({ type: END_LOADING });
+      } catch (error: any) {
+        console.error(error.message);
+      }
     }
-  }
+  };
+
+export const getArticle = (id: string) => async (dispatch: Dispatch<any>) => {
+  dispatch({ type: START_LOADING });
+  const { data } = await api.fetchArticle(id);
+
+  console.log(data);
+
+  dispatch({ type: FETCH_ARTICLE, payload: { article: data } });
+  dispatch({ type: END_LOADING });
 };
 
 export const getArticlesBySearch =
