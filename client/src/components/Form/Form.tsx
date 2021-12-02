@@ -70,7 +70,7 @@ export const Form: React.FC<FormProps> = ({ currentId, setCurrentId }) => {
   }
 
   return (
-    <Paper className={classes.paper}>
+    <Paper elevation={6} className={classes.paper}>
       <form
         autoComplete="off"
         noValidate

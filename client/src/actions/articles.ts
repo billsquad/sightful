@@ -29,7 +29,7 @@ export const getArticles = (page: number) => async (dispatch: any) => {
 
       dispatch({ type: END_LOADING });
     } catch (error: any) {
-      console.error(error.stack);
+      console.error(error.message);
     }
   }
 };

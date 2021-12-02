@@ -1,12 +1,4 @@
-import {
-  Container,
-  Grow,
-  Grid,
-  Paper,
-  AppBar,
-  TextField,
-  Button,
-} from "@material-ui/core";
+import { Container, Grow, Grid, Paper } from "@material-ui/core";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "wouter";
@@ -15,9 +7,9 @@ import { Articles } from "../Articles/Articles";
 import { Form } from "../Form/Form";
 import Pagination from "../CustomPagination/CustomPagination";
 import { useSearchQuery } from "../../hooks/hooks";
-import ChipInput from "material-ui-chip-input";
 
 import useStyles from "./styles";
+import { SearchBar } from "../SearchBar/SearchBar";
 
 export const Home = () => {
   const classes = useStyles();
@@ -46,7 +38,7 @@ export const Home = () => {
     }
   };
 
-  const hangleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") {
       searchArticle();
     }
@@ -74,44 +66,26 @@ export const Home = () => {
             <Articles setCurrentId={setCurrentId} />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <AppBar
-              className={classes.searchBar}
-              position="static"
-              color="inherit"
-            >
-              <TextField
-                name="search"
-                variant="outlined"
-                label="Search through articles"
-                fullWidth
-                value={searchTerm}
-                onKeyPress={hangleKeyPress}
-                onChange={(e) => setSearchTerm(e.target.value)}
+            {/* TODO: Sticky form position doesn't work */}
+            <div style={{ position: "sticky", top: "0" }}>
+              <SearchBar
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                handleKeyPress={handleKeyPress}
+                tags={tags}
+                handleAddTag={handleAddTag}
+                handleDeleteTag={handleDeleteTag}
+                searchArticle={searchArticle}
               />
-              <ChipInput
-                style={{ margin: "10px 0" }}
-                value={tags as string[]}
-                onAdd={handleAddTag}
-                onDelete={handleDeleteTag}
-                label="Search tags"
-                variant="outlined"
-              />
-              <Button
-                onClick={searchArticle}
-                color="primary"
-                variant="outlined"
-              >
-                Search
-              </Button>
-            </AppBar>
-            <Form currentId={currentId} setCurrentId={setCurrentId} />
-            {!searchQuery && !tags.length && (
-              <Paper elevation={6}>
-                <div>
-                  <Pagination page={page as number} />
-                </div>
-              </Paper>
-            )}
+              <Form currentId={currentId} setCurrentId={setCurrentId} />
+              {!searchQuery && !tags.length && (
+                <Paper elevation={6} className={classes.pagination}>
+                  <div>
+                    <Pagination page={page as number} />
+                  </div>
+                </Paper>
+              )}
+            </div>
           </Grid>
         </Grid>
       </Container>
