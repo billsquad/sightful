@@ -16,6 +16,8 @@ export default (
         currentPage: action.payload.currentPage,
         numberOfPages: action.payload.numberOfPages,
       };
+    case actionType.FETCH_ARTICLE:
+      return { ...state, article: action.payload.article };
     case actionType.FETCH_BY_SEARCH:
       return { ...state, articles: action.payload.data };
     case actionType.CREATE:
