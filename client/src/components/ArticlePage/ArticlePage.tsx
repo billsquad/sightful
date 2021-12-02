@@ -14,7 +14,7 @@ import { useAppSelector } from "../../custom.hooks";
 import useStyles from "./styles";
 import { RootState } from "../../store";
 import { ArticleState } from "./interface";
-import { getArticle } from "../../actions/articles";
+import { getArticle, getArticlesBySearch } from "../../actions/articles";
 
 interface ArticlePageProps {}
 
@@ -33,6 +33,17 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({}) => {
     dispatch(getArticle(params?.id as string));
   }, [params?.id]);
 
+  useEffect(() => {
+    if (article) {
+      dispatch(
+        getArticlesBySearch({
+          searchTerm: "none",
+          tags: article?.tags.join(","),
+        })
+      );
+    }
+  }, [article]);
+
   if (isLoading) {
     return (
       <Paper elevation={6} className={classes.loadingPaper}>
@@ -40,6 +51,12 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({}) => {
       </Paper>
     );
   }
+
+  console.log(articles);
+
+  // const recommendedArticles = articles.filter(
+  //   ({ _id }: { _id: string }) => _id === article._id
+  // );
 
   return article ? (
     <Paper className={classes.paper} elevation={6}>
@@ -81,6 +98,27 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({}) => {
           <Divider color="secondary" style={{ margin: "20px 0" }} />
         </div>
       </div>
+      {/* {recommendedArticles.length && (
+        <div className={classes.section}>
+          <Typography gutterBottom variant="h5">
+            You might also like
+            <Divider />
+            <div className={classes.recommendedPosts}>
+              {recommendedArticles.map(
+                ({
+                  title,
+                  message,
+                  url,
+                  name,
+                  _id,
+                  starCount,
+                  totalReviews,
+                }: any) => ({ title })
+              )}
+            </div>
+          </Typography>
+        </div>
+      )} */}
     </Paper>
   ) : null;
 };
