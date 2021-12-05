@@ -1,10 +1,10 @@
 import axios from "axios";
 
 // **PROD**
-// const API = axios.create({ baseURL: "https://sightful-server.herokuapp.com" });
+const API = axios.create({ baseURL: "https://sightful-server.herokuapp.com" });
 
 // **DEVELOPMENT**
-const API = axios.create({ baseURL: "http://localhost:5000" });
+// const API = axios.create({ baseURL: "http://localhost:5000" });
 
 API.interceptors.request.use((req: any) => {
   if (localStorage.getItem("sessionId")) {
