@@ -53,9 +53,12 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({}) => {
     );
   }
 
-  const recommendedArticles = articles.filter(
-    ({ _id }: { _id: string }) => _id !== article._id
-  );
+  let recommendedArticles = [];
+  if (article) {
+    recommendedArticles = articles?.filter(
+      ({ _id }: { _id: string }) => _id !== article._id
+    );
+  }
 
   const openPost = (id: string) => {
     setLocation(`/articles/${id}`);
