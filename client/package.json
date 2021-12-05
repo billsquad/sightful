@@ -2,7 +2,7 @@
   "name": "package.json",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --port 3000",
+    "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview --port 8080",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
