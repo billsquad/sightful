@@ -40,4 +40,8 @@ export default makeStyles((theme) => ({
     borderRadius: "5px",
     height: "39vh",
   },
+  ratingStars: {
+    display: "flex",
+    alignItems: "center",
+  },
 }));

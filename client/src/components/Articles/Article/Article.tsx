@@ -95,7 +95,11 @@ export const Article = ({ article, setCurrentId }: any) => {
             articleId={article._id}
             totalReviewsCount={totalReviewsCount}
             averageRate={averageRate}
-          />
+          >
+            <span style={{ fontSize: "0.8rem" }}>
+              Total reviews: <strong>{totalReviewsCount}</strong>
+            </span>
+          </RatingStars>
         </div>
         {(user?.result?.googleId === article?.author ||
           user?.result?._id === article?.author) && (

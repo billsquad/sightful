@@ -13,6 +13,7 @@ interface RatingStarsProps {
 }
 
 const RatingStars: React.FC<RatingStarsProps> = ({
+  children,
   articleId,
   totalReviewsCount,
   averageRate,
@@ -82,14 +83,14 @@ const RatingStars: React.FC<RatingStarsProps> = ({
         );
       })}
       &nbsp;
-      <span>
-        Total reviews: <strong>{totalReviewsCount}</strong>
-      </span>
-      &nbsp;
+      {children}
       {user && userRate && (
-        <span>
-          Your rate: <span style={{ fontWeight: "bold" }}>{userRate}/5</span>
-        </span>
+        <>
+          &nbsp;
+          <span style={{ fontSize: "0.8rem" }}>
+            Your rate: <span style={{ fontWeight: "bold" }}>{userRate}/5</span>
+          </span>
+        </>
       )}
     </>
   );

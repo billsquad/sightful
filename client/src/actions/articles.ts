@@ -40,8 +40,6 @@ export const getArticle = (id: string) => async (dispatch: Dispatch<any>) => {
   dispatch({ type: START_LOADING });
   const { data } = await api.fetchArticle(id);
 
-  console.log(data);
-
   dispatch({ type: FETCH_ARTICLE, payload: { article: data } });
   dispatch({ type: END_LOADING });
 };

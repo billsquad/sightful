@@ -15,6 +15,7 @@ import useStyles from "./styles";
 import { RootState } from "../../store";
 import { ArticleState } from "./interface";
 import { getArticle, getArticlesBySearch } from "../../actions/articles";
+import RatingStars from "../RatingStars/RatingStars";
 
 interface ArticlePageProps {}
 
@@ -52,11 +53,13 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({}) => {
     );
   }
 
-  console.log(articles);
+  const recommendedArticles = articles.filter(
+    ({ _id }: { _id: string }) => _id !== article._id
+  );
 
-  // const recommendedArticles = articles.filter(
-  //   ({ _id }: { _id: string }) => _id === article._id
-  // );
+  const openPost = (id: string) => {
+    setLocation(`/articles/${id}`);
+  };
 
   return article ? (
     <Paper className={classes.paper} elevation={6}>
@@ -98,7 +101,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({}) => {
           <Divider color="secondary" style={{ margin: "20px 0" }} />
         </div>
       </div>
-      {/* {recommendedArticles.length && (
+      {recommendedArticles.length ? (
         <div className={classes.section}>
           <Typography gutterBottom variant="h5">
             You might also like
@@ -111,14 +114,37 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({}) => {
                   url,
                   name,
                   _id,
-                  starCount,
-                  totalReviews,
-                }: any) => ({ title })
+                  averageRate,
+                  totalReviewsCount,
+                }: any) => (
+                  <div
+                    key={_id}
+                    style={{ margin: "20px", cursor: "pointer" }}
+                    onClick={() => openPost(_id)}
+                  >
+                    <Typography gutterBottom variant="h6">
+                      {title}
+                    </Typography>
+                    <Typography gutterBottom variant="subtitle2">
+                      {name}
+                    </Typography>
+                    <Typography gutterBottom variant="h6">
+                      {message.slice(0, 30)}...
+                    </Typography>
+                    <div className={classes.ratingStars}>
+                      <RatingStars
+                        articleId={_id}
+                        totalReviewsCount={totalReviewsCount}
+                        averageRate={averageRate}
+                      />
+                    </div>
+                  </div>
+                )
               )}
             </div>
           </Typography>
         </div>
-      )} */}
+      ) : null}
     </Paper>
   ) : null;
 };
